@@ -12,7 +12,7 @@ const singleUiAxios = axios.create({
 singleUiAxios.interceptors.request.use((config) => {
     // const Token = localStorage.getItem(shareData.ORGANIZATION_STORAGE_KEY2);
     // const tokenObj = Token ? JSON.parse(Token) : null;
-    config.headers['Authorization'] = 'Bearer '
+    config.headers['Authorization'] = 'Bearer'
     return config;
 //     if (tokenObj?.access_token) {
 //         config.headers['Authorization'] = 'Bearer ' + tokenObj.access_token;
