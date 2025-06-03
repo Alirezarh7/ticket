@@ -9,48 +9,30 @@ import {
     FaIdCard
 } from "react-icons/fa";
 import usePersianNumbers from "../hook/usePersianNumber.ts";
+import {useEffect, useState} from "react";
+import {http} from "../service/superAPP.service.ts";
 
 const TicketCard = () => {
-    const data = {
-        "EnterDate": "1404/02/26-16MAY1684",
-        "ExitDate": null,
-        "PassNo": "Z61358513",
-        "birthdate": "1330/05/05",
-        "karevanno": 10004,
-        "EnterSport": "جده",
-        "sexid": 1,
-        "medineh": "بعد",
-        "MeccaState": 4,
-        "cell": "09924769276",
-        "ssn": "0035366508",
-        "KarevanPrice": 2327239723,
-        "ZaerNo": 15970005,
-        "ProvinceName": "اردبيل",
-        "MadinehbuildnameAddress": "المنطقة المرکزیة الجنوبیة - شارع أبو أیوب الأنصاري - جوار المحکمة العامة",
-        "meccabuildname": "قصر العلیان",
-        "mainmaktab": 7,
-        "Education": "بيسواد",
-        "passengerStepId": 1,
-        "IsEmergency": true,
-        "managername": "سپهدار پروانه",
-        "EXitFport": null,
-        "PassengerId": 100040068,
-        "sex": "مرد",
-        "EnterFport": "اردبيل",
-        "Religion": "شيعه",
-        "idno": "1568",
-        "madinehbuildname": "منازلی المدینه",
-        "MeccabuildnameAddress": "ریع بخش -  شارع أجیاد، امام فندق الغدیر أجیاد",
-        "fathername": "داداش بالا",
-        "ExitSport": null,
-        "name": "حسین",
-        "Family": "بابایی پیرالقیر",
-        "OlaveyatDate": "1386/09/08",
-        "passengerstepName": "دريافت استان",
-        "job": "کشاورز",
-        "VisaNo": 17132626
-    }
+    const [data2, setData2] = useState<any>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res =  await http.get('https://my.haj.ir/api/exportapi/api/GetInformationDetailZaerHaj');
+                setData2(res)
+            } catch (error) {
+                console.error('خطا در گرفتن داده:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        console.log(data2)
+        fetchData();
+    }, []);
+    console.log(data2)
     usePersianNumbers()
+    if (loading) return <p>در حال بارگذاری...</p>;
     return (
         <div className='p-1'>
             <div
@@ -58,29 +40,29 @@ const TicketCard = () => {
                 {/* Header */}
                 <div className="bg-[#059669] text-white px-4 py-3 flex w-full justify-between items-center">
                     <div className="text-lg font-bold">بلیط پرواز</div>
-                    <div className="text-sm">کد زائر: {data.ZaerNo}</div>
+                    <div className="text-sm">کد زائر: {data2.ZaerNo}</div>
                 </div>
 
                 {/* Passenger Info */}
                 <div className="p-4 grid grid-cols-2 gap-3 text-sm">
                     <div className="flex items-center gap-2 text-black">
                         <FaUser/>
-                        <p>{data.name} {data.Family}</p>
+                        <p>{data2.name} {data2.Family}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <FaIdCard/> کد ملی: {data.ssn}
+                        <FaIdCard/> کد ملی: {data2.ssn}
                     </div>
                     <div className="flex items-center gap-2">
-                        <FaPassport/> پاسپورت: {data.PassNo}
+                        <FaPassport/> پاسپورت: {data2.PassNo}
                     </div>
                     <div className="flex items-center gap-2">
-                        <FaCalendarAlt/> تولد: {data.birthdate}
+                        <FaCalendarAlt/> تولد: {data2.birthdate}
                     </div>
                     <div className="flex items-center gap-2">
-                        <FaMapMarkerAlt/> استان: {data.ProvinceName}
+                        <FaMapMarkerAlt/> استان: {data2.ProvinceName}
                     </div>
                     <div className="flex items-center gap-2">
-                        <FaPhoneAlt/> {data.cell}
+                        <FaPhoneAlt/> {data2.cell}
                     </div>
                 </div>
 
@@ -90,17 +72,17 @@ const TicketCard = () => {
                         <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
                             <FaPlaneDeparture/> پرواز رفت
                         </div>
-                        <span>{data.EnterDate}</span>
+                        <span>{data2.EnterDate}</span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 text-sm">
                         <div className="flex flex-col">
                             <span className="font-semibold">فرودگاه مبدا:</span>
-                            <span>{data.EnterFport}</span>
+                            <span>{data2.EnterFport}</span>
                         </div>
                         <div className="flex flex-col">
                             <span className="font-semibold">مقصد:</span>
-                            <span>{data.EnterSport}</span>
+                            <span>{data2.EnterSport}</span>
                         </div>
                     </div>
 
@@ -108,17 +90,17 @@ const TicketCard = () => {
                         <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
                             <FaPlaneArrival/> پرواز برگشت
                         </div>
-                        <span>{data.ExitDate ?? "مشخص نیست"}</span>
+                        <span>{data2.ExitDate ?? "مشخص نیست"}</span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 text-sm mt-2">
                         <div className="flex flex-col">
                             <span className="font-semibold">فرودگاه خروج:</span>
-                            <span>{data.EXitFport ?? "نامشخص"}</span>
+                            <span>{data2.EXitFport ?? "نامشخص"}</span>
                         </div>
                         <div className="flex flex-col">
                             <span className="font-semibold">مقصد:</span>
-                            <span>{data.ExitSport ?? "نامشخص"}</span>
+                            <span>{data2.ExitSport ?? "نامشخص"}</span>
                         </div>
                     </div>
                 </div>
@@ -126,18 +108,18 @@ const TicketCard = () => {
                 {/* Additional Info */}
                 <div className="px-4 py-3 text-sm  text-black">
                     <div className="grid grid-cols-2 gap-2">
-                        <div>نام پدر: {data.fathername}</div>
-                        <div>تحصیلات: {data.Education}</div>
-                        <div>شغل: {data.job}</div>
-                        <div>دین: {data.Religion}</div>
-                        <div>اولویت: {data.OlaveyatDate}</div>
-                        <div>کد کاروان: {data.karevanno}</div>
+                        <div>نام پدر: {data2.fathername}</div>
+                        <div>تحصیلات: {data2.Education}</div>
+                        <div>شغل: {data2.job}</div>
+                        <div>دین: {data2.Religion}</div>
+                        <div>اولویت: {data2.OlaveyatDate}</div>
+                        <div>کد کاروان: {data2.karevanno}</div>
                     </div>
                     <div className="mt-2">
-                        <strong>ساختمان مدینه:</strong> {data.madinehbuildname} - {data.MadinehbuildnameAddress}
+                        <strong>ساختمان مدینه:</strong> {data2.madinehbuildname} - {data2.MadinehbuildnameAddress}
                     </div>
                     <div className="mt-1">
-                        <strong>ساختمان مکه:</strong> {data.meccabuildname} - {data.MeccabuildnameAddress}
+                        <strong>ساختمان مکه:</strong> {data2.meccabuildname} - {data2.MeccabuildnameAddress}
                     </div>
                 </div>
             </div>

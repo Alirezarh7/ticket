@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@appsan-web/mini-web-sdk": "^0.0.15",
     "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.7.7",
     "framer-motion": "^12.12.1",
