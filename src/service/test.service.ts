@@ -5,7 +5,7 @@ import type {IGetInformationDetailZaerHaj} from "../type/getInformationDetailZae
 
 const getInformationDetailZaerHaj = async () => {
 
-  return await http.get(`/GetInformationDetailZaerHaj`) as IGetInformationDetailZaerHaj;
+  return await http.get(`https://my.haj.ir/api/ExportApi/api/haj/GetInformationDetailZaerHaj`) as IGetInformationDetailZaerHaj;
 };
 const useGetInformationDetailZaerHaj = () => {
 

@@ -146,22 +146,22 @@ const TicketCard = () => {
                 <div>نام پدر: {item.fathername}</div>
                 <div>تحصیلات: {item.education}</div>
                 <div>شغل: {item?.job}</div>
-                <div>دین: {item.religion}</div>
+                <div>مذهب: {item.religion}</div>
                 <div>اولویت: {item.olaveyatDate}</div>
                 <div>کد کاروان: {item?.karevanno}</div>
               </div>
-              <div className="my-2">
+              <div className="mt-1">
                 <strong>هتل
                   مدینه:</strong> {item.madinehbuildname}
               </div>
-              <div className="my-2">
+              <div className="mt-1">
                 <strong>آدرس :</strong> {item.madinehbuildnameAddress}
               </div>
-              <div className="my-1">
+              <div className="mt-1">
                 <strong>هتل
                   مکه:</strong> {item.meccabuildname}
               </div>
-              <div className="my-2">
+              <div className="mt-1">
                 <strong>آدرس :</strong> {item.meccabuildnameAddress}
               </div>
             </div>
