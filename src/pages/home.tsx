@@ -150,18 +150,18 @@ const TicketCard = () => {
                 <div>اولویت: {item.olaveyatDate}</div>
                 <div>کد کاروان: {item?.karevanno}</div>
               </div>
-              <div className="mt-1">
+              <div className="mt-0.5">
                 <strong>هتل
                   مدینه:</strong> {item.madinehbuildname}
               </div>
-              <div className="mt-1">
+              <div className="mt-0.5">
                 <strong>آدرس :</strong> {item.madinehbuildnameAddress}
               </div>
-              <div className="mt-1">
+              <div className="mt-0.5">
                 <strong>هتل
                   مکه:</strong> {item.meccabuildname}
               </div>
-              <div className="mt-1">
+              <div className="mt-0.5">
                 <strong>آدرس :</strong> {item.meccabuildnameAddress}
               </div>
             </div>
