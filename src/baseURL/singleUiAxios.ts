@@ -6,7 +6,7 @@ const singleUiAxios = axios.create({
 });
 
 singleUiAxios.interceptors.request.use((config) => {
-    config.headers['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJtaW5pQXBwTmFtZSI6ImFwcDphZDpoYWotZmxpZ2h0LWRhdGUiLCJ1c2VybmFtZSI6IjAwMjA1MzczNTIiLCJzdWIiOiJtaW5pQXBwIiwiaWF0IjoxNzQ5MDIxNjcyLCJleHAiOjE3NDkwMjUyNzJ9.Y0Q_-t62ustLiaxFhZsm1RnVyIcJi-9bdeN6Wyfj320VDAb5t9cHpUXZXKvZIWN9XcaXH6NyrFcfc0sKjm-fTQ';
+    config.headers['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJtaW5pQXBwTmFtZSI6ImFwcDphZDpoYWotZmxpZ2h0LWRhdGUiLCJ1c2VybmFtZSI6IjIyMTg2NzE2MzgiLCJzdWIiOiJtaW5pQXBwIiwiaWF0IjoxNzQ5MDIzNDM2LCJleHAiOjE3NDkwMjcwMzZ9.2cQCRzFXPaS8Z4zNqF8hLMA9vd2R0SeYGhycv3rhRWs6jh_DG99EVPhEB-aPUxzI1-3OP0QuVCbiseeF58v-lA';
     return config;
 }, (error) => {
     return Promise.reject(error);

@@ -11,6 +11,7 @@ import {
 import usePersianNumbers from "../hook/usePersianNumber.ts";
 import {useGetInformationDetailZaerHaj} from "../service/test.service.ts";
 import {enqueueSnackbar} from "notistack";
+import {useEffect} from "react";
 
 
 const TicketCard = () => {
@@ -18,10 +19,23 @@ const TicketCard = () => {
   const {data: data2, isLoading} = useGetInformationDetailZaerHaj()
 
   console.log(data2)
-  if (data2?.passengers?.length === 0) {enqueueSnackbar('هیچ دیتای یافت نشد', {variant: 'warning'})}
+  useEffect(() => {
+    if (data2?.passengers?.length === 0) {
+      enqueueSnackbar('هیچ دیتای یافت نشد', {variant: 'warning'})
+    }
+  })
 
   usePersianNumbers()
+  const convertPersianToEnglish = (str: string) => {
+    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    const englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+    return str.replace(/[۰-۹]/g, (d) => englishDigits[persianDigits.indexOf(d)]);
+  };
+  const formatTime = (timeStr: string) => {
+    if (!timeStr ) return "--";
+    return convertPersianToEnglish(`${timeStr.slice(0, 2)}:${timeStr.slice(2)}`);
+  };
   if (isLoading) return <p>در حال بارگذاری...</p>;
   return (
     <div className='p-1'>
@@ -31,7 +45,7 @@ const TicketCard = () => {
             {/* Header */}
             <div className="bg-[#059669] text-white px-4 py-3 flex w-full justify-between items-center">
               <div className="text-lg font-bold">بلیط پرواز</div>
-              <div className="text-sm">کد زائر: {item.zaerNo}</div>
+              <div className="text-sm">شناسه زائر: {item.passengerId}</div>
             </div>
 
             {/* Passenger Info */}
@@ -63,52 +77,66 @@ const TicketCard = () => {
                 <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
                   <FaPlaneDeparture/> پرواز رفت
                 </div>
-                {(() => {
-                  const [date, flight] = item.enterDate?.split('-') ?? ["--", "--"];
-                  return (
-                    <div className="flex flex-col text-end">
-                      <span>تاریخ: {date}</span>
-                      <span>شماره پرواز: {flight}</span>
-                    </div>
-                  );
-                })()}
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-2">
                   <span className="font-semibold">فرودگاه مبدا:</span>
                   <span>{item.enterFport}</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold">مقصد:</span>
+                <div className="flex flex-col gap-2">
+                  <span className="font-semibold">فرودگاه مقصد:</span>
                   <span>{item.enterSport}</span>
                 </div>
+                {(() => {
+                  const [date, flight,time] = item.enterDate?.split('-') ?? ["--", "--"];
+                  return (
+                    <>
+                      <div className="flex flex-col">
+                        <span>تاریخ: {date}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span>شماره پرواز: {flight}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span>ساعت پرواز: {formatTime(time)}</span>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
 
               <div className="mt-4 flex justify-between items-center text-sm font-medium">
                 <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
                   <FaPlaneArrival/> پرواز برگشت
                 </div>
-                {(() => {
-                  const [date, flight] = item.exitDate?.split('-') ?? ["--", "--"];
-                  return (
-                    <div className="flex flex-col text-end">
-                      <span>تاریخ: {date}</span>
-                      <span>شماره پرواز: {flight}</span>
-                    </div>
-                  );
-                })()}
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-sm mt-2">
-                <div className="flex flex-col">
-                  <span className="font-semibold">فرودگاه خروج:</span>
+                <div className="flex flex-col gap-2">
+                  <span className="font-semibold">فرودگاه مبدا:</span>
                   <span>{item.eXitFport ?? "--"}</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold">مقصد:</span>
+                <div className="flex flex-col gap-2">
+                  <span className="font-semibold">فرودگاه مقصد: </span>
                   <span>{item.exitSport ?? "--"}</span>
                 </div>
+                {(() => {
+                  const [date, flight,time] = item.exitDate?.split('-') ?? ["--", "--"];
+                  return (
+                    <>
+                      <div className="flex flex-col">
+                        <span>تاریخ: {date}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span>شماره پرواز: {flight}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span>ساعت پرواز: {formatTime(time)}</span>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
 
@@ -122,18 +150,24 @@ const TicketCard = () => {
                 <div>اولویت: {item.olaveyatDate}</div>
                 <div>کد کاروان: {item?.karevanno}</div>
               </div>
-              <div className="mt-2">
-                <strong>ساختمان
-                  مدینه:</strong> {item.madinehbuildname} - {item.madinehbuildnameAddress}
+              <div className="my-2">
+                <strong>هتل
+                  مدینه:</strong> {item.madinehbuildname}
               </div>
-              <div className="mt-1">
-                <strong>ساختمان
-                  مکه:</strong> {item.meccabuildname} - {item.meccabuildnameAddress}
+              <div className="my-2">
+                <strong>آدرس :</strong> {item.madinehbuildnameAddress}
+              </div>
+              <div className="my-1">
+                <strong>هتل
+                  مکه:</strong> {item.meccabuildname}
+              </div>
+              <div className="my-2">
+                <strong>آدرس :</strong> {item.meccabuildnameAddress}
               </div>
             </div>
           </div>
         ))
-        : null }
+        : null}
     </div>
   );
 };
