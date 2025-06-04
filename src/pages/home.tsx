@@ -14,10 +14,11 @@ import {useGetInformationDetailZaerHaj} from "../service/test.service.ts";
 
 const TicketCard = () => {
 
-    const {data:data2} =useGetInformationDetailZaerHaj()
-
+    const {data:data2,isLoading} =useGetInformationDetailZaerHaj()
+    console.log(data2)
 
     usePersianNumbers()
+    if (isLoading) return <p>در حال بارگذاری...</p>;
     return (
         <div className='p-1'>
 
