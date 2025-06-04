@@ -1,39 +1,19 @@
 import axios from 'axios';
 import { currentBaseUrl } from "./baseURL.ts";
-// import { enqueueSnackbar } from 'notistack';
-
-
 
 const singleUiAxios = axios.create({
     baseURL: currentBaseUrl,
 });
 
-// قبل از هر ریکوئست، توکن رو از localStorage بردار و روی هدر ست کن
 singleUiAxios.interceptors.request.use((config) => {
-    // const Token = localStorage.getItem(shareData.ORGANIZATION_STORAGE_KEY2);
-    // const tokenObj = Token ? JSON.parse(Token) : null;
-    config.headers['Authorization'] = 'Bearer'
+    config.headers['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJtaW5pQXBwTmFtZSI6ImFwcDphZDpoYWotZmxpZ2h0LWRhdGUiLCJ1c2VybmFtZSI6IjAwMTAzOTE0MjgiLCJzdWIiOiJtaW5pQXBwIiwiaWF0IjoxNzQ4OTYzNDk3LCJleHAiOjE3NDk4Mjc0OTd9.uK42wR0pyrog-sC8TUrv2YKJ27NAX-H_VUcIvv0vg5tLFj62KqoTzfT-D_crc8kFwtCkAXPOK8BNL6Z1gqwNvA';
     return config;
-//     if (tokenObj?.access_token) {
-//         config.headers['Authorization'] = 'Bearer ' + tokenObj.access_token;
-//     }
-//     return config;
-// }, (error) => {
-//     return Promise.reject(error);
+}, (error) => {
+    return Promise.reject(error);
 });
 
-// هندل ارور
-// singleUiAxios.interceptors.response.use(
-//     response => response,
-//     axiosError => {
-//         if (axiosError.response?.status === 401){
-//             automaticlyLogout()
-//         } else if (axiosError.response?.status === 502) {
-//             return enqueueSnackbar('سامانه در حال بروز رسانی نسخه جدید می باشد، لطفا تا ۱۵ دقیقه دیگر مراجعه نفرمایید', { variant: 'info' });
-//         } else {
-//             return Promise.reject(axiosError);
-//         }
-//     }
-// );
+singleUiAxios.interceptors.response.use(
+  response => response,
+);
 
 export default singleUiAxios;
