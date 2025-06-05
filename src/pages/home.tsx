@@ -44,7 +44,7 @@ const TicketCard = () => {
             className="max-w-md h-screen   mx-auto bg-gray-200 rounded-2xl shadow-xl overflow-hidden border border-gray-600  text-black ">
             {/* Header */}
             <div className="bg-[#059669] text-white px-4 py-3 flex w-full justify-between items-center">
-              <div className="text-lg font-bold">بلیط پرواز</div>
+              <div className="text-lg font-bold">اطلاعات سفر</div>
               <div className="text-sm">شناسه زائر: {item.passengerId}</div>
             </div>
 
@@ -89,17 +89,17 @@ const TicketCard = () => {
                   <span>{item.enterSport}</span>
                 </div>
                 {(() => {
-                  const [date, flight,time] = item.enterDate?.split('-') ?? ["--", "--"];
+                  const [date, flight,time] = item.enterDate?.split('-') ?? ["نامشخص", "نامشخص","نامشخص"];
                   return (
                     <>
                       <div className="flex flex-col">
-                        <span>تاریخ: {date}</span>
+                        <span>تاریخ تقریبی: {date}</span>
                       </div>
                       <div className="flex flex-col">
-                        <span>شماره پرواز: {flight}</span>
+                        <span>شماره پرواز تقریبی: {flight}</span>
                       </div>
                       <div className="flex flex-col">
-                        <span>ساعت پرواز: {formatTime(time)}</span>
+                        <span>ساعت پرواز تقریبی: {formatTime(time)}</span>
                       </div>
                     </>
                   );
@@ -115,14 +115,14 @@ const TicketCard = () => {
               <div className="grid grid-cols-2 gap-3 text-sm mt-2">
                 <div className="flex flex-col gap-2">
                   <span className="font-semibold">فرودگاه مبدا:</span>
-                  <span>{item.eXitFport ?? "--"}</span>
+                  <span>{item.eXitFport ?? "نامشخص"}</span>
                 </div>
                 <div className="flex flex-col gap-2">
                   <span className="font-semibold">فرودگاه مقصد: </span>
-                  <span>{item.exitSport ?? "--"}</span>
+                  <span>{item.exitSport ?? "نامشخص"}</span>
                 </div>
                 {(() => {
-                  const [date, flight,time] = item.exitDate?.split('-') ?? ["--", "--"];
+                  const [date, flight,time] = item.exitDate?.split('-') ?? ["نامشخص", "نامشخص","نامشخص"];
                   return (
                     <>
                       <div className="flex flex-col">
