@@ -33,7 +33,7 @@ const TicketCard = () => {
     return str.replace(/[۰-۹]/g, (d) => englishDigits[persianDigits.indexOf(d)]);
   };
   const formatTime = (timeStr: string) => {
-    if (!timeStr ) return "--";
+    if (!timeStr ) return "اعلام میگردد";
     return convertPersianToEnglish(`${timeStr.slice(0, 2)}:${timeStr.slice(2)}`);
   };
   if (isLoading) return <p>در حال بارگذاری...</p>;
@@ -89,17 +89,17 @@ const TicketCard = () => {
                   <span>{item.enterSport}</span>
                 </div>
                 {(() => {
-                  const [date, flight,time] = item.enterDate?.split('-') ?? ["نامشخص", "نامشخص","نامشخص"];
+                  const [date, flight,time] = item.enterDate?.split('-') ?? ["اعلام میگردد", "اعلام میگردد","اعلام میگردد"];
                   return (
                     <>
                       <div className="flex flex-col">
-                        <span>تاریخ تقریبی: {date}</span>
+                        <span>تاریخ : {date ?? 'نامشخص'}</span>
                       </div>
                       <div className="flex flex-col">
-                        <span>شماره پرواز تقریبی: {flight}</span>
+                        <span>شماره پرواز : {flight ?? 'نامشخص'}</span>
                       </div>
                       <div className="flex flex-col">
-                        <span>ساعت پرواز تقریبی: {formatTime(time)}</span>
+                        <span>ساعت پرواز : {formatTime(time)}</span>
                       </div>
                     </>
                   );
@@ -122,11 +122,12 @@ const TicketCard = () => {
                   <span>{item.exitSport ?? "نامشخص"}</span>
                 </div>
                 {(() => {
-                  const [date, flight,time] = item.exitDate?.split('-') ?? ["نامشخص", "نامشخص","نامشخص"];
+                  // eslint-disable-next-line no-unsafe-optional-chaining
+                  const [date, flight,time] = item.exitDate !== '' ? item.exitDate?.split('-') :  ["اعلام میگردد", "اعلام میگردد"];
                   return (
                     <>
                       <div className="flex flex-col">
-                        <span>تاریخ: {date}</span>
+                        <span>تاریخ (تقریبی): {date}</span>
                       </div>
                       <div className="flex flex-col">
                         <span>شماره پرواز: {flight}</span>
